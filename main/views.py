@@ -6,10 +6,11 @@ from .models import User
 from .models import Post, Like
 from django.http import HttpResponse
 
+data = 'Вход'
+
 
 def save_form(request):
-  data = 'Вход'
-  
+
   x = request.POST
   form = UserForm(x)
   users = User.objects.all()
@@ -28,9 +29,10 @@ def save_form(request):
 
 
 def home(request):
-  data = 'Вход'
-  
+  global data
   if request.method == 'POST':
+    print(request.POST)
+
     save_form(request)
     x = request.POST
     data = f"{x['surname']} {x['name']}"
@@ -40,9 +42,9 @@ def home(request):
 
 
 def populartours(request):
-  data = 'Вход'
+  global data
   users = User.objects.all()
-  user_id = None
+  user_id = 0
   
   posts = Post.objects.all()
 
@@ -133,7 +135,7 @@ def dislikePost(request):
 
 
 def tourselect(request):
-  data = 'Вход'
+  global data
 
   if request.method == 'POST':
     save_form(request)
@@ -143,21 +145,11 @@ def tourselect(request):
   return render(request, 'main/tourselect.html', {'data': data})
 
 def about(request):
-  data = 'Вход'
+  global data
 
   if request.method == 'POST':
     save_form(request)
     x = request.POST
     data = f"{x['surname']} {x['name']}"
     
-  return render(request, 'main/about.html', { 'data': data})
-  
-
-# def likes(request):
-#   if (request.method != 'POST'):
-#     return 
-#   user = request.POST.get('user')
-#   likes = request.POST.get('likes') # 1 - лайк. -1 - дизлайк
-#   # likes = Likes.odjects.get(user=user)  
-#   reply = {}
-#   return JsonResponse(reply)
+  return render(request, 'main/about.html', {'data': data})
