@@ -1,0 +1,76 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+  <link href="{% static 'main/css/style.css' %}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+  <header>
+    <span class="menu"><button><img
+          src="https://icon-icons.com/icons2/935/PNG/512/menu-three-outlined-rounded-lines-symbol_icon-icons.com_73215.png" 
+          width="28"></button></span>
+    <span class="logo"><em>Wanderer</em></span>
+   <span class="auth">{{ data }}</span>
+  </header>
+
+  <div class="auth-window">
+    <div class="auth-inside-window">
+      <button class="exit">✖</button>
+      <h1>Авторизация</h1>
+      <form id="auth-form" method="post">
+        {% csrf_token %}
+
+        {{ form.name }}
+        {{ form.surname }}
+        {{ form.password }}
+        {{ form.email }}
+        {{ form.age }}
+        {{ form.gender }}
+
+        <input type="submit" value="Войти" id="submit">
+      </form>
+    </div>
+  </div>
+
+  <aside class="navigation">
+    <nav>
+      <div class="navHeader">
+        <h1><span>Н</span>авигация</h1>
+      </div>
+      <div class="navList">
+        <ul>
+          <li><a href="{% url 'home' %}">Главная</a></li>
+          <li><a href="{% url 'poptours' %}">Самые популярные туры</a></li>
+          <li><a href="{% url 'tourselect' %}">Как выбрать лучший тур</a></li>
+          <li><a href="{% url 'about' %}">О нас</a></li>
+        </ul>
+      </div>
+      <footer>
+        <span>@</span>wanderer <strong>2024-2024</strong>
+      </footer>
+    </nav>
+  </aside>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  
+  <footer class="main_footer">
+    <span class="footer">Wanderer@mail.ru</span>
+  </footer>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="{% static 'main/js/script.js' %}"></script>
+
+</body>
+
+</html>
